@@ -8,18 +8,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else {
       sendResponse({ grade: null });
     }
-  } else if (request.message === "reloadGrade") {
-    // reload
-    fetchAndDisplayGrade();
   }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const reloadButton = document.createElement("button");
-  reloadButton.textContent = "Reload Grade";
-  reloadButton.addEventListener("click", () => {
-    chrome.runtime.sendMessage({ message: "reloadGrade" });
-  });
-
-  document.body.appendChild(reloadButton);
 });

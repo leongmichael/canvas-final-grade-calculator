@@ -1,32 +1,29 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
-
 
 function App() {
   const [isOnSjusdPage, setIsOnSjusdPage] = useState(false);
   const [grade, setGrade] = useState<string | null>(null);
 
-  const [minGrade, setMinGrade] = useState('');
-  const [finalWeight, setFinalWeight] = useState('');
-  const [result, setResult] = useState('');
-  const [displayMinGrade, setDisplayMinGrade] = useState(''); // prevents constant updating of minGrade in the final result text
-
-
+  const [minGrade, setMinGrade] = useState("");
+  const [finalWeight, setFinalWeight] = useState("");
+  const [result, setResult] = useState("");
+  const [displayMinGrade, setDisplayMinGrade] = useState(""); // prevents constant updating of minGrade in the final result text
 
   const handleCalculate = () => {
     const currentGrade = Number(grade?.substring(0, grade.length - 1)); // remove % sign
-    const result = ((Number(minGrade) - currentGrade * (1 - Number(finalWeight) / 100)) / (Number(finalWeight) / 100)).toFixed(2);
+    const result = (
+      (Number(minGrade) - currentGrade * (1 - Number(finalWeight) / 100)) /
+      (Number(finalWeight) / 100)
+    ).toFixed(2);
     setResult(result);
     setDisplayMinGrade(minGrade);
-
   };
-
-
 
   const checkPage = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -63,12 +60,18 @@ function App() {
     <>
       {isOnSjusdPage ? (
         <>
-          {grade ? <Typography variant="body1">Your grade: {grade}</Typography> : <Typography variant="body1">Grade not found</Typography>}
+          {grade ? (
+            <Typography variant="body1">Your grade: {grade}</Typography>
+          ) : (
+            <Typography variant="body1">Grade not found</Typography>
+          )}
 
           <Box sx={{ flexGrow: 0, marginTop: 1 }}>
             <Grid container spacing={1}>
               <Grid item xs={8}>
-                <Typography variant="body1">Minimum desired grade (%) </Typography>
+                <Typography variant="body1">
+                  Minimum desired grade (%){" "}
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <TextField
@@ -98,14 +101,24 @@ function App() {
               </Grid>
             </Grid>
 
-            <Button variant="contained" sx={{ marginTop: 1 }} onClick={handleCalculate}>Calculate</Button>
+            <Button
+              variant="contained"
+              sx={{ marginTop: 1 }}
+              onClick={handleCalculate}
+            >
+              Calculate
+            </Button>
 
-            <Typography variant="body1" sx={{ marginTop: 1 }}>You need a {result}% on the final to get a {displayMinGrade}% in the class.</Typography>
+            <Typography variant="body1" sx={{ marginTop: 1 }}>
+              You need a {result}% on the final to get a {displayMinGrade}% in
+              the class.
+            </Typography>
           </Box>
-
         </>
       ) : (
-        <Typography variant="body2">You are not on 'sjusd.instructure.com'</Typography>
+        <Typography variant="body2">
+          You are not on 'sjusd.instructure.com'
+        </Typography>
       )}
     </>
   );

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Canvas Final Grade Calculator",
   "version": "1.0.0",
-  "description": "Calculates the necessary score for final exam to achieve a specific grade in a course.",
+  "description": "Web extension that calculates the required score on your final exam to receive your desired grade.",
   "action": {
     "default_popup": "index.html"
   },
@@ -11,10 +11,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://sjusd.instructure.com/*"],
+      "matches": ["https://*/*"],
       "js": ["content-scripts.js"]
     }
   ],
-  "permissions": ["scripting", "tabs"],
-  "host_permissions": ["*://sjusd.instructure.com/*"]
+  "permissions": ["scripting", "tabs", "activeTab"]
 }

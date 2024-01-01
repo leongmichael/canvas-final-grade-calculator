@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import { Button } from "@mui/material";
 
 function App() {
-  const [isOnSjusdPage, setIsOnSjusdPage] = useState(false);
+  const [isOnCanvasPage, setIsOnCanvasPage] = useState(false);
   const [grade, setGrade] = useState<string | null>(null);
 
   const [minGrade, setMinGrade] = useState("");
@@ -32,9 +32,9 @@ function App() {
         activeTab &&
         activeTab.id !== undefined &&
         activeTab.url &&
-        activeTab.url.includes("sjusd.instructure.com")
+        activeTab.url.includes("instructure.com")
       ) {
-        setIsOnSjusdPage(true);
+        setIsOnCanvasPage(true);
         // Ensure activeTab.id is defined before using it
         chrome.tabs.sendMessage(
           activeTab.id,
@@ -46,7 +46,7 @@ function App() {
           },
         );
       } else {
-        setIsOnSjusdPage(false);
+        setIsOnCanvasPage(false);
         setGrade(null);
       }
     });
@@ -58,66 +58,73 @@ function App() {
 
   return (
     <>
-      {isOnSjusdPage ? (
+      {isOnCanvasPage ? (
         <>
           {grade ? (
-            <Typography variant="body1">Your grade: {grade}</Typography>
-          ) : (
-            <Typography variant="body1">Grade not found</Typography>
-          )}
+            <>
+              <Typography variant="body1">Your grade: {grade}</Typography>
+              <Box sx={{ flexGrow: 0, marginTop: 1 }}>
+                <Grid container spacing={1}>
+                  <Grid item xs={8}>
+                    <Typography variant="body1">
+                      Minimum desired grade (%){" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      type="number"
+                      size="small"
+                      value={minGrade}
+                      onChange={(e) => setMinGrade(e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
 
-          <Box sx={{ flexGrow: 0, marginTop: 1 }}>
-            <Grid container spacing={1}>
-              <Grid item xs={8}>
-                <Typography variant="body1">
-                  Minimum desired grade (%){" "}
+                <Grid container spacing={1} sx={{ marginTop: 1 }}>
+                  <Grid item xs={8}>
+                    <Typography variant="body1">
+                      Weight of final (%){" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      type="number"
+                      size="small"
+                      value={finalWeight}
+                      onChange={(e) => setFinalWeight(e.target.value)}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Button
+                  variant="contained"
+                  sx={{ marginTop: 1 }}
+                  onClick={handleCalculate}
+                >
+                  Calculate
+                </Button>
+
+                <Typography variant="body1" sx={{ marginTop: 1 }}>
+                  You need a {result}% on the final to get a {displayMinGrade}%
+                  in the class.
                 </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="number"
-                  size="small"
-                  value={minGrade}
-                  onChange={(e) => setMinGrade(e.target.value)}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={1} sx={{ marginTop: 1 }}>
-              <Grid item xs={8}>
-                <Typography variant="body1">Weight of final (%) </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="number"
-                  size="small"
-                  value={finalWeight}
-                  onChange={(e) => setFinalWeight(e.target.value)}
-                />
-              </Grid>
-            </Grid>
-
-            <Button
-              variant="contained"
-              sx={{ marginTop: 1 }}
-              onClick={handleCalculate}
-            >
-              Calculate
-            </Button>
-
-            <Typography variant="body1" sx={{ marginTop: 1 }}>
-              You need a {result}% on the final to get a {displayMinGrade}% in
-              the class.
+              </Box>
+            </>
+          ) : (
+            <Typography variant="body1">
+              Grade not found. Please navigate to the 'Grades' section of the
+              class. Refresh the page if you are on the 'Grades' section but
+              still see this message.
             </Typography>
-          </Box>
+          )}
         </>
       ) : (
         <Typography variant="body2">
-          You are not on 'sjusd.instructure.com'
+          You must go to a Canvas class 'Grades' page to use this extension.
         </Typography>
       )}
     </>

@@ -1,6 +1,10 @@
-# Canvas Final Grade Calculator
+# <img src="imgs/Logo500x500.png" alt="favicon" width="40" height="40"/> Canvas Final Grade Calculator
 
-Web extension that calculates the required score on your final exam to receive your desired grade.
+Web extension that automatically fetches Canvas class grade and calculates the required score on your final exam to receive your desired grade.
+
+<div align="left">
+    <img src="imgs/demo.jpg" alt="demo"/>
+</div>
 
 ## Setup
 

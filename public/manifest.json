@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Canvas Final Grade Calculator",
   "version": "1.0.0",
-  "description": "Web extension that calculates the required score on your final exam to receive your desired grade.",
+  "description": "Automatically fetches Canvas class grade and calculates the required score on your final exam to receive your desired grade.",
   "action": {
     "default_popup": "index.html"
   },

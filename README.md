@@ -2,8 +2,8 @@
 
 Web extension that automatically fetches Canvas class grade and calculates the required score on your final exam to receive your desired grade.
 
-<div align="left">
-    <img src="imgs/demo.jpg" alt="demo"/>
+<div align="center">
+    <img src="imgs/CanvasDemo.jpg" width="640" height="400" alt="demo"/>
 </div>
 
 ## Setup
